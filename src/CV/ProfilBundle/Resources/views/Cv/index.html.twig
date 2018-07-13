@@ -1,0 +1,71 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block body %}
+
+<h2>Liste des CV</h2>
+<hr>
+<br><br>
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Profil</th>
+      <th scope="col">Date de création</th>
+      <th scope="col">Entreprise</th>
+      <th scope="col">Intitule</th>
+      <th scope="col">RI</th>
+      <th scope="col" style="width: 315px;">Actions</th>
+    </tr>
+  </thead>
+  {% for Cv in listCv %}
+  <tbody data-link="row" class="rowlink">
+    <tr>
+    <td> <a href="{{ path('cv_profil_view', {'id': Cv.Profil.id}) }}">
+    {{ Cv.Profil.prenom }} {{ Cv.Profil.nom }}</td>
+     <td> {{ Cv.dateCrea|date('d/m/Y') }}</td>
+      <td>
+      {% if Cv.Client == '' %}
+          Pas de client
+      {% else %}
+           <a href="{{ path('cv_profil_viewclient', {'id': Cv.Client.id}) }}"> 
+           {{ Cv.Client.nom }}
+      {% endif %}
+    </td>
+      <td>{{ Cv.intitule }}</td>
+      <td>{{ Cv.Ri.prenom }}</td>
+      <td style="text-align: center;"> 
+
+    <a href="{{ path('cv_genere', {'id': Cv.id }) }}" class="btn btn-success">
+    <i class="glyphicon glyphicon-eye-open"></i>
+
+    </a>
+    <a href="{{ path('cv_genere_pdf', {'id': Cv.id}) }}" class="btn btn-success">
+    <i class="glyphicon glyphicon-export"></i> PDF
+    </a>
+
+    </a>
+    <a href="{{ path('cv_attachedupl', {'id': Cv.id, 'duplicate': 'yes' }) }}" class="btn btn-primary">
+     Dupliquer
+    </a>
+
+    <a href="{{ path('cv_edit', {'id': Cv.id}) }}"  class="btn btn-warning">
+    <i class="glyphicon glyphicon-pencil"></i>
+    </a>
+
+    <a href="{{ path('cv_deletecv', {'id': Cv.id }) }}" class="btn btn-danger">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+	</td>
+    </tr>
+    {% else %}
+      <td>Pas (encore !) de Cv</td>
+    {% endfor %}
+  </tbody>
+</table>
+ 
+  
+
+
+{% endblock %}
+
+
+

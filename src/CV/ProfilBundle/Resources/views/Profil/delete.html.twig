@@ -1,0 +1,27 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un Profil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Supprimer un Profil</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer le profil de "{{ Profil.prenom }} {{ Profil.nom }}" ?
+  </p><br><br>
+
+  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+  <form action="{{ path('cv_profil_delete', {'id': Profil.id}) }}" method="post">
+    <a href="{{ path('cv_profil_view', {'id': Profil.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'annonce
+    </a>
+    {# Ici j'ai écrit le bouton de soumission à la main #}
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

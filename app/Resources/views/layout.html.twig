@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Outil CV{% endblock %}</title>
+
+  {% block stylesheets %}
+    {# On charge le CSS de bootstrap depuis le site directement #}
+     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container">
+
+
+
+    <nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span class="navbar-brand" href="#">Outils CV</span>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+          <li class="{{ app.request.get('_route') == 'cv_profil_liste' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_search' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_view' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_edit' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_delete' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_download' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_edit_com' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_delete_com' ? 'active' }}
+  {{ app.request.get('_route') == 'cv_profil_add' ? 'active' }}">
+      <a href="{{ path('cv_profil_liste') }}">Gestion Profil</a>
+  </li>
+        <li class="{{ app.request.get('_route') == 'cv_profil_homeclient' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_downloadclient' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_viewclient' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_addclient' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_searchclient' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_deleteclient' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_editclient' ? 'active' }}
+        {{ app.request.get('_route') == 'cv_profil_viewcontact' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_deletecontact' ? 'active' }}
+      {{ app.request.get('_route') == 'cv_profil_editcontact' ? 'active' }}">
+          <a href="{{ path('cv_profil_homeclient') }}">Gestion Entreprise</a>
+      </li>
+      <li class="{{ app.request.get('_route') == 'cv_agenda' ? 'active' }}">
+        <a href="{{ path('cv_agenda') }}">Actions <span class="badge badge-secondary">{{ notif }}</span></a>
+      </li>
+      </ul>
+     
+           <form action="{{ path('cv_search') }}" method="post" style="margin-left: 115px;"class="navbar-form navbar-left">
+        <div class="form-group search-panel">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                      <span id="search_concept">Profil</span> <span class="caret"></span>
+                    </button>
+                    <ul style ="left:inherit;min-width: 120px;" class="dropdown-menu" id="Search" role="menu">
+                      <li><a href="#Profil">Profil</a></li>
+                      <li><a href="#Entreprise">Entreprise</a></li>
+                      <li><a href="#Interlocuteur">Interlocuteur</a></li>
+                    </ul>
+          <input type="hidden" name="search_param" value="Profil" id="search_param">         
+                <input type="text" class="form-control" name="search" placeholder="Rechercher...">
+        </div>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
+      </form>
+
+
+      <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown {{ app.request.get('_route') == 'cv_settings' ? 'active' }} ">
+          <a style="min-width: 210px;text-align: center;" class="dropdown-toggle" data-toggle="dropdown" href="#">{{ app.user.prenom }} <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ path('cv_settings') }}">Informations Personnelles</a></li>
+            <li><a href="{{ path('cv_gestion') }}">Paramètres de l'application</a></li>
+            <li><a href="{{ path('cv_gestion_ri') }}">Gestion des utilisateurs</a></li>
+            <li class="{{ app.request.get('_route') == 'logout' ? 'active' }}">
+                <a href="{{ path('logout') }}">Déconnexion</a>
+            </li>                       
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+
+ 
+</nav>
+
+
+<br><br><br>
+
+      <div id="content" class="col-md-13">
+        {% block body %}
+        {% endblock %}
+      </div>
+   
+
+    <hr><br>
+
+    <footer>
+      <p>TRSb © {{ 'now'|date('Y') }}</p>
+    </footer>
+  </div>
+
+  {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+
+</body>
+</html>
+<style>
+  
+  .dropdown-menu{
+    text-align: center;
+}
+
+.nav>li>a>.badge {
+    margin-left: 3px; 
+        display: inline-block;
+    min-width: 10px;  
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #337ab7;
+    border-radius: 10px;
+    margin-right:5px;
+}
+
+.container {
+    width: 1220px;
+}
+
+.container-fluid {
+  padding-right: 0px; 
+
+}
+
+</style>
+
+<script>
+$(document).ready(function(e){
+    $('#Search').find('a').click(function(e) {
+    e.preventDefault();
+    var param = $(this).attr("href").replace("#","");
+    var concept = $(this).text();
+    $('span#search_concept').text(concept);
+    $('#search_param').val(param);
+  });
+});
+  </script>
+<!--<script type="text/javascript">
+    $(document).ready(function () {
+        var url = window.location;
+        $('ul.nav a[href="'+ url +'"]').parent().addClass('active');
+        $('ul.nav a').filter(function() {
+             return this.href == url;
+        }).parent().addClass('active');
+    });
+</script> -->

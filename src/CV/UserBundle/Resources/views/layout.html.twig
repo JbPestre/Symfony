@@ -1,0 +1,18 @@
+
+
+{% extends "::layout.html.twig" %}
+
+{% block title %}
+  Profils - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
+  {% block cvprofil_body %}
+  <h1>Profils</h1>
+
+  <hr>
+  {% endblock %}
+
+{% endblock %}

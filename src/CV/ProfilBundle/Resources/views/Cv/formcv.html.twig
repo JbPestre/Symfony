@@ -1,0 +1,812 @@
+
+{% block body %}
+
+ {{ form_start(form) }}
+
+
+<table style="width:100%;font-size:30px;">
+  <tr>
+    <td style='float:left;'>
+     Ajouter un CV 
+    </td>
+    <td style='float:right;vertical-align:bottom;'>{{ form_widget(form.ajouter, {'attr': {'class': 'btn btn-success'}}) }} 
+    </td>
+  </tr>
+</table>
+
+<hr><br>
+
+<div class="well" style="display: flex;">
+
+<div id ="myDIVlist" class="list-group col-md-3">
+
+  <a href="#" id="button1" class="list-group-item list-group-item-action active" style="height: 62px;">
+    <b>Informations Générales</b>
+  </a>
+  <a href="#" id="button2" class="list-group-item list-group-item-action">
+<table style="width : 100%;">
+  <tr>
+    <td>
+   <b> Compétences techniques</b>
+    </td>
+    <td style="width:100%;">
+        <div style="float: right; margin-bottom: -15px;">
+              {{ form_row(form.posComp) }}
+        </div></a> 
+   </td>
+  </tr>
+</table>
+  <a href="#" id="button3" class="list-group-item list-group-item-action">
+<table style="width : 100%;">
+  <tr>
+    <td>
+   <b> Expériences Professionnelles</b>
+    </td>
+    <td style="width:100%;">
+        <div style="float: right; margin-bottom: -15px;">
+              {{ form_row(form.posExp) }}
+        </div></a> 
+
+   </td>
+  </tr>
+</table>
+  <a href="#" id="button4" class="list-group-item list-group-item-action">
+
+<table style="width : 100%;">
+  <tr>
+    <td>
+    <b>Formations</b>
+    </td>
+    <td style="width:100%;">
+        <div style="float: right; margin-bottom: -15px;">
+              {{ form_row(form.posForma) }}
+        </div></a> 
+
+   </td>
+  </tr>
+</table>
+  <a href="#" id="button5" class="list-group-item list-group-item-action">
+<table style="width : 100%;">
+  <tr>
+    <td>
+    <b>Langues</b>
+    </td>
+    <td style="width:100%;">
+        <div style="float: right; margin-bottom: -15px;">
+              {{ form_row(form.posLang) }}
+        </div></a> 
+
+   </td>
+  </tr>
+</table>
+  <a href="#"  id="button6" class="list-group-item list-group-item-action">
+
+    <table style="width : 100%;">
+  <tr>
+     <td style="width:40%;">
+    <b>Bloc Libre 1</b>
+    </td>
+     <td style="width:40%;">
+        <div style="float: right; margin-bottom: -15px;">
+              {{ form_row(form.posLibre1) }}
+        </div></a> 
+
+   </td>
+  </tr>
+</table>
+
+  <a href="#"  id="button7" class="list-group-item list-group-item-action">
+
+      <table style="width : 100%;">
+  <tr>
+     <td style="width:40%;">
+    <b>Bloc Libre 2</b>
+    </td>
+    <td style="width:40%;">
+        <div style="float: right; margin-bottom: -15px;">
+              {{ form_row(form.posLibre2) }}
+        </div></a> 
+
+   </td>
+  </tr>
+</table>
+</a>
+
+</div>
+
+  <div class="col-md-1">
+  </div>
+
+
+<div id="myDIV" class="col-md-8">
+<h3><b>Entête du CV :</b></h3><br><br>
+{% if form.dateCrea is defined %}
+{{ form_row(form.dateCrea, {'label': 'Date de création :'}) }}
+{% endif %}
+<br>
+{{ form_row(form.intitule, {'label': 'Intitulé du CV :'}) }}
+<br>
+{{ form_row(form.descriptif, {'label': 'Descriptif d\'entête :'}) }}
+<br><br>
+</div> 
+
+
+<div id="myDIV3" class='collapse-group col-md-8' style="margin-top: 20px;">
+  <div class='panel panel-default'>
+    <div class='panel-heading' role='tab' id='headingTwo'>
+      <table style="width: 100%;">
+         <tr>
+        <td style="width: 18%;">
+          Nom du bloc :
+        </td>
+         <td>
+          <div style="margin-bottom: -15px;font-size: 16px;font-weight: bold;">
+          {{ form_row(form.blockExp) }}
+           </div>
+          </td>
+        <td>
+        <td>
+        <h4 class="panel-title" style="float: right;width: 77%;">
+        <a role='button' data-toggle='collapse' href='#collapseTwo' aria-expanded='true' aria-controls='collapseTwo' class='trigger collapsed'>
+        </a>
+      </h4>
+      </td>
+        </tr>
+      </table>
+    </div>
+    <div id='collapseTwo' class='panel-collapse collapse in' role='tabpanel' aria-labelledby='headingTwo'>
+      <div class='panel-body'>
+
+
+         <br>  
+      <div id="cv_experiences" data-prototype="{% filter escape %}{% include 'CVProfilBundle:CV:form/experiences.html.twig' with {'form': (form.experiences.vars.prototype) | e} %}{% endfilter %}">
+      </div>
+   <a href="#" id="add_exp">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter une expérience supplémentaire
+        </a>
+
+     </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="myDIV5" class='collapse-group col-md-8' style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingThree">
+        <table style="width: 100%;">
+         <tr>
+        <td style="width: 18%;">
+          Nom du bloc :
+        </td>
+         <td>
+          <div style="margin-bottom: -15px;font-size: 16px;font-weight: bold;">
+          {{ form_row(form.blockLang) }}
+           </div>
+          </td>
+        <td>
+        <td>
+        <h4 class="panel-title" style="float: right;width: 45%;">
+          <a role="button" data-toggle="collapse" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" class="trigger collapsed">
+          </a>
+        </h4>
+        </td>
+        </tr>
+      </table>
+      </div>
+      <div id="collapseThree" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingThree">
+        <div class="panel-body">
+
+      <br>  
+      <div id="cv_langues" data-prototype="{% filter escape %}{% include 'CVProfilBundle:CV:form/langue.html.twig' with {'form': (form.langues.vars.prototype) | e} %}{% endfilter %}">
+      </div>
+   <a href="#" id="add_langues">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter une langue supplémentaire
+        </a>
+     
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="myDIV4" class='collapse-group col-md-8' style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingFour">
+
+      <table style="width: 100%;">
+         <tr>
+        <td style="width: 18%;">
+          Nom du bloc :
+        </td>
+         <td>
+          <div style="margin-bottom: -15px;font-size: 16px;font-weight: bold;">
+          {{ form_row(form.blockForma) }}
+           </div>
+          </td>
+        <td>
+        <td>
+        <h4 class="panel-title" style="float: right;width: 45%;">
+          <a role="button" data-toggle="collapse" href="#collapseFour" aria-expanded="true" aria-controls="collapseFour" class="trigger collapsed">
+          </a>
+        </h4>
+        </td>
+        </tr>
+      </table>
+      </div>
+      <div id="collapseFour" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFour">
+        <div class="panel-body">
+
+               <br>  
+      <div id="cv_formations" data-prototype="{% filter escape %}{% include 'CVProfilBundle:CV:form/formation.html.twig' with {'form': (form.formations.vars.prototype) | e} %}{% endfilter %}">
+      </div>
+   <a href="#" id="add_formations">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter une formation supplémentaire
+        </a>
+     
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div id="myDIV2" class='collapse-group col-md-8' style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingFive">
+        <table style="width: 100%;">
+         <tr>
+        <td style="width: 18%;">
+          Nom du bloc :
+        </td>
+        <td>
+          <div style="margin-bottom: -15px;font-size: 16px;font-weight: bold;">
+          {{ form_row(form.blockComp) }}
+           </div>
+          </td>
+        <td>
+        <h4 class="panel-title" style="float: right;width: 68%;">
+          <a role="button" data-toggle="collapse" href="#collapseFive" aria-expanded="true" aria-controls="collapseFive" class="trigger collapsed">
+          </a>
+        </h4>
+        </td>
+        </tr>
+      </table>
+      </div>
+      <div id="collapseFive" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingFive">
+        <div class="panel-body">
+
+
+            <br>  
+      <div id="cv_competences" data-prototype="{% filter escape %}{% include 'CVProfilBundle:CV:form/competence.html.twig' with {'form': (form.competences.vars.prototype) | e} %}{% endfilter %}">
+      </div>
+   <a href="#" id="add_competences">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter une compétence supplémentaire
+        </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="myDIV6" class='collapse-group col-md-8' style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingSix">
+        <table style="width: 100%;">
+         <tr>
+        <td style="width: 18%;">
+          Nom du bloc :
+        </td>
+        <td>
+          <div style="margin-bottom: -15px;font-size: 16px;font-weight: bold;">
+          {{ form_row(form.blockLibre1) }}
+           </div>
+          </td>
+        <td>
+        <h4 class="panel-title" style="float: right;width: 68%;">
+          <a role="button" data-toggle="collapse" href="#collapseSix" aria-expanded="true" aria-controls="collapseSix" class="trigger collapsed">
+          </a>
+        </h4>
+        </td>
+        </tr>
+      </table>
+      </div>
+      <div id="collapseSix" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSix">
+        <div class="panel-body">
+        {{ form_row(form.blocLibre1, {'label': ' '}) }}
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="myDIV7" class='collapse-group col-md-8' style="margin-top: 20px;">
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab" id="headingSeven">
+        <table style="width: 100%;">
+         <tr>
+        <td style="width: 18%;">
+          Nom du bloc :
+        </td>
+        <td>
+          <div style="margin-bottom: -15px;font-size: 16px;font-weight: bold;">
+          {{ form_row(form.blockLibre2) }}
+           </div>
+          </td>
+        <td>
+        <h4 class="panel-title" style="float: right;width: 68%;">
+          <a role="button" data-toggle="collapse" href="#collapseSeven" aria-expanded="true" aria-controls="collapseSeven" class="trigger collapsed">
+          </a>
+        </h4>
+        </td>
+        </tr>
+      </table>
+      </div>
+      <div id="collapseSeven" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
+        <div class="panel-body">
+        {{ form_row(form.blocLibre2, {'label': ' '}) }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% do form.experiences.setRendered %}
+{% do form.formations.setRendered %}
+{% do form.competences.setRendered %}
+{% do form.langues.setRendered %}
+  {{ form_end(form) }}
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+  $('a.list-group-item').click(function(e) {
+        e.preventDefault();
+        $('a.list-group-item').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>
+
+<script>
+
+  $(window).scroll(function() {
+  sessionStorage.scrollTop = $(this).scrollTop();
+});
+
+$(document).ready(function(){
+
+   $("#myDIV2").hide();
+   $("#myDIV3").hide();
+   $("#myDIV4").hide();
+   $("#myDIV5").hide();
+   $("#myDIV6").hide();
+   $("#myDIV7").hide();
+
+    $("#button1").click(function(e){
+        $("#myDIV").show();
+         $("#myDIV2").hide();
+         $("#myDIV3").hide();
+         $("#myDIV4").hide();
+         $("#myDIV5").hide();
+         $("#myDIV6").hide();
+         $("#myDIV7").hide();
+         e.preventDefault();
+    });
+
+     $("#button2").click(function(e){
+        $("#myDIV2").show();
+         $("#myDIV").hide();
+         $("#myDIV3").hide();
+         $("#myDIV4").hide();
+         $("#myDIV5").hide();
+         $("#myDIV6").hide();
+         $("#myDIV7").hide();
+         e.preventDefault();
+   
+    });
+
+     $("#button3").click(function(e){
+        $("#myDIV3").show();
+         $("#myDIV2").hide();
+         $("#myDIV").hide();
+         $("#myDIV4").hide();
+         $("#myDIV5").hide();
+         $("#myDIV6").hide();
+         $("#myDIV7").hide();
+         e.preventDefault();
+
+    });
+
+     $("#button4").click(function(e){
+        $("#myDIV4").show();
+         $("#myDIV2").hide();
+         $("#myDIV3").hide();
+         $("#myDIV").hide();
+         $("#myDIV5").hide();
+         $("#myDIV6").hide();
+         $("#myDIV7").hide();
+         e.preventDefault();
+    });
+
+     $("#button5").click(function(e){
+        $("#myDIV5").show();
+         $("#myDIV2").hide();
+         $("#myDIV3").hide();
+         $("#myDIV4").hide();
+         $("#myDIV").hide();
+         $("#myDIV6").hide();
+         $("#myDIV7").hide();
+         e.preventDefault();
+    });
+
+       $("#button6").click(function(e){
+        $("#myDIV6").show();
+         $("#myDIV2").hide();
+         $("#myDIV3").hide();
+         $("#myDIV4").hide();
+         $("#myDIV").hide();
+         $("#myDIV5").hide();
+         $("#myDIV7").hide();
+         e.preventDefault();
+    });
+
+       $("#button7").click(function(e){
+        $("#myDIV7").show();
+         $("#myDIV2").hide();
+         $("#myDIV3").hide();
+         $("#myDIV4").hide();
+         $("#myDIV").hide();
+         $("#myDIV6").hide();
+         $("#myDIV5").hide();
+         e.preventDefault();
+    });
+
+
+
+
+});
+</script>
+
+<script>
+
+      $(document).ready(function() {
+    var $container = $('div#cv_experiences');
+    var index = $container.find(':input').length;
+    $('#add_exp').click(function(e) {
+      addCategory($container);
+         addCategoryt($containert);
+      e.preventDefault();
+      return false;
+    });
+
+       if (index == 0) {
+      addCategory($container);
+    } else {
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    }
+    function addCategory($container) {
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, 'Expériences n°' + (index+1))
+        .replace(/__name__/g,        index)
+      ;
+      var $prototype = $(template);
+      addDeleteLink($prototype);
+      $container.append($prototype);
+      index++;
+      indexu = index - 1;
+    }
+    function addDeleteLink($prototype) {
+      var $deleteLink = $('<br><a style="float:right;" href="#" class="btn btn-danger">Supprimer cette expérience</a><br><br><hr><br>');
+      $prototype.append($deleteLink);
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault();
+        return false;
+      });
+    }
+
+
+    var str10 = "div#cv_experiences";
+    var str20 = "_";
+    var str30 = "_tags";
+
+
+    var res0 = str10.concat(str20, indexu);
+    var res20 = res0.concat(str30);
+    var $containert = $(res20);
+    var indext = $containert.find(':input').length;
+
+      
+
+  $containert.each(function() {
+        addCategoryt($(this));
+      });
+
+    function addCategoryt($containert) {
+
+    res0 = str10.concat(str20, indexu);
+     res20 = res0.concat(str30);
+     $containert = $(res20);
+
+      var templatet = $containert.attr('data-prototype')
+        .replace(/__name2__label__/g, 'Tag n°' + (indext+1))
+        .replace(/__name2__/g,        indext)
+      ;
+      var $prototypet = $(templatet);
+      $containert.append($prototypet);
+      indext++;
+      var $addtagt = $('<br><br><a href="#"><span class="glyphicon glyphicon-plus"></span> Ajouter un tag</a>');
+      $prototypet.after($addtagt);
+
+
+        $addtagt.click(function(e) {
+            if (indext == 0) {
+              $addtagt.remove();
+          addCategoryt($containert);
+       e.preventDefault();
+      return false;
+
+    } else {
+
+     $containert.each(function() {
+        addCategoryt($(this));
+      });
+       e.preventDefault();
+       $addtagt.remove();
+      return false;
+    }
+
+
+      });
+    }
+
+
+  });
+
+
+////////////////////////////////////////////////////////////////////
+
+      $(document).ready(function() {
+    var $containeri = $('div#cv_formations');
+    var indexi = $containeri.find(':input').length;
+    $('#add_formations').click(function(e) {
+      addCategoryi($containeri);
+      e.preventDefault();
+      return false;
+    });
+      
+       if (indexi == 0) {
+      addCategoryi($containeri);
+    } else {
+      $containeri.children('div').each(function() {
+        addDeleteLinki($(this));
+      });
+     }
+    function addCategoryi($containeri) {
+      var templatei = $containeri.attr('data-prototype')
+        .replace(/__name__label__/g, 'Formation n°' + (indexi+1))
+        .replace(/__name__/g,        indexi)
+      ;
+      var $prototypei = $(templatei);
+      addDeleteLinki($prototypei);
+      $containeri.append($prototypei);
+      indexi++;
+    }
+    function addDeleteLinki($prototypei) {
+      var $deleteLinki = $('<br><a style="float:right;" href="#" class="btn btn-danger">Supprimer cette formation</a><br><br><hr><br>');
+      $prototypei.append($deleteLinki);
+
+      $deleteLinki.click(function(e) {
+        $prototypei.remove();
+        e.preventDefault();
+        return false;
+      });
+    }
+  });
+  
+////////////////////////////////////////////////////////
+
+      $(document).ready(function() {
+    var $containero = $('div#cv_competences');
+    var indexo = $containero.find(':input').length;
+    $('#add_competences').click(function(e) {
+      addCategoryo($containero);
+       addCategoryot($containerot);
+      e.preventDefault();
+      return false;
+    });
+    
+     if (indexo == 0) {
+      addCategoryo($containero);
+    } else {
+      $containero.children('div').each(function() {
+        addDeleteLinko($(this));
+      });
+    }
+    function addCategoryo($containero) {
+      var templateo = $containero.attr('data-prototype')
+        .replace(/__name__label__/g, 'Compétence n°' + (indexo+1))
+        .replace(/__name__/g,        indexo)
+      ;
+      var $prototypeo = $(templateo);
+      addDeleteLinko($prototypeo);
+      $containero.append($prototypeo);
+      indexo++;
+      indexou = indexo - 1;
+    }
+    function addDeleteLinko($prototypeo) {
+      var $deleteLinko = $('<br><a style="float:right;" href="#" class="btn btn-danger">Supprimer cette compétence</a><br><br><hr><br>');
+      $prototypeo.append($deleteLinko);
+      $deleteLinko.click(function(e) {
+        $prototypeo.remove();
+        e.preventDefault();
+        return false;
+      });
+    }
+
+
+ 
+    var str1 = "div#cv_competences";
+    var str2 = "_";
+    var str3 = "_tags";
+
+
+    var res = str1.concat(str2, indexou);
+    var res2 = res.concat(str3);
+    var $containerot = $(res2);
+    var indexot = $containerot.find(':input').length;
+
+
+      
+
+  $containerot.each(function() {
+        addCategoryot($(this));
+      });
+
+    function addCategoryot($containerot) {
+
+    res = str1.concat(str2, indexou);
+     res2 = res.concat(str3);
+     $containerot = $(res2);
+
+      var templateot = $containerot.attr('data-prototype')
+        .replace(/__name1__label__/g, 'Tag n°' + (indexot+1))
+        .replace(/__name1__/g,        indexot)
+      ;
+      var $prototypeot = $(templateot);
+      $containerot.append($prototypeot);
+      indexot++;
+      var $addtag = $('<br><br><a href="#"><span class="glyphicon glyphicon-plus"></span> Ajouter un tag</a>');
+      $prototypeot.after($addtag);
+
+
+        $addtag.click(function(e) {
+            if (indexot == 0) {
+              $addtag.remove();
+          addCategoryot($containerot);
+       e.preventDefault();
+      return false;
+
+    } else {
+
+     $containerot.each(function() {
+        addCategoryot($(this));
+      });
+       e.preventDefault();
+       $addtag.remove();
+      return false;
+    }
+
+
+      });
+    }
+
+  });
+
+
+  
+////////////////////////////////////////////////////////////////////
+
+        $(document).ready(function() {
+   var $containere = $('div#cv_langues');
+     var indexe = $containere.find(':input').length;
+    $('#add_langues').click(function(e) {
+      addFichier($containere);
+      e.preventDefault();
+      return false;
+    });
+
+     if (indexe == 0) {
+      addFichier($containere);
+    } else {
+      $containere.children('div').each(function() {
+        addDeleteFile($(this));
+      });
+    }
+    function addFichier($containere) {
+      var template1 = $containere.attr('data-prototype')
+       .replace(/__name__label__/g, 'Langues n°' + (indexe+1))
+        .replace(/__name__/g,        indexe)
+      ;
+       var $prototype1 = $(template1);
+     addDeleteFile($prototype1);
+      $containere.append($prototype1);
+      indexe++;
+    }
+    function addDeleteFile($prototype1) {
+      var $deleteLink1 = $('<div style="margin-top: 33px;"> <a href="#"><span class="glyphicon glyphicon-remove" style="margin-left: 6px;font-size:17px;"></span></a></div><br><br>');
+      $prototype1.append($deleteLink1);
+      $deleteLink1.click(function(e) {
+        $prototype1.remove();
+        e.preventDefault(); 
+        return false;
+      });
+    }
+  });
+
+
+</script>
+
+
+<style>
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+    margin-bottom: 10px;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+    margin-bottom: 10px;
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  padding:10px;
+  color:#555;
+  font-size:16px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing:3px;
+  text-decoration:none;
+
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+
+.taggy {
+    margin-top: 10px;
+    margin-right: 15px;
+}
+
+hr {
+
+
+  border-top: 1px solid #d6d2d2;
+}
+</style>
+{% endblock %}

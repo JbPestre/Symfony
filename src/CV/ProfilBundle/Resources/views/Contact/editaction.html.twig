@@ -1,0 +1,198 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+
+{% block title %}
+  Ajouter une action
+{% endblock %}
+
+
+{% block body %}
+
+  <h2>Modifier une action</h2>
+  <br>
+<div class="well">
+
+
+{{ form_start(form) }}
+
+{% if form.dateCrea is defined %}
+{{ form_row(form.dateCrea, {'label': 'Date de création'}) }}
+{% endif %}
+  <div class="col-sm-4" style="padding-left: 0px;float: inherit;">
+{{ form_row(form.type, {'label': 'Type d\'action *'}) }}
+</div>
+  <div class="col-sm-4" style="padding-left: 0px;float: inherit;">
+{{ form_row(form.nom, {'label': 'Nom de l\'action *'}) }}
+  </div>
+  {{ form_row(form.dateAction, {'label': 'Date de la prochaine action'}) }}
+
+
+{{ form_row(form.commentaires, {'label': 'Commentaires'}) }}
+    
+<div class="collapse-group">
+<div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" class="trigger collapsed">
+          Ajouter des documents annexes
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+
+          <br>  
+<div id="actions_edit_fichiers" data-prototype="{% filter escape %}{% include 'CVProfilBundle:Profil:form/fichiers.html.twig' with {'form': (form.fichiers.vars.prototype) | e} %}{% endfilter %}">
+      {% for child1 in form.fichiers %}
+<div class="row">
+    <div class="col-sm-4">
+        {{ form_row(child1.name, {'label': 'Nom du fichier'}) }}
+    </div>
+    <div class="col-sm-4">
+           {{ form_row(child1.file, {'label': 'Fichier'}) }}
+    </div>
+</div>
+{% endfor %}
+</div>
+   <a href="#" id="add_fichier">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter un document supplémentaire
+        </a>
+    </div>
+    </div>
+  </div>
+</div>
+
+<br>
+*Champs obligatoires
+<br><br>
+{{ form_widget(form.modifier, {'attr': {'class': 'btn btn-success'}}) }}
+{% do form.fichiers.setRendered %}
+  {{ form_end(form) }}
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+   var $containere = $('div#profil_fichiers');
+     var indexe = $containere.find(':input').length;
+    $('#add_fichier').click(function(e) {
+      addFichier($containere);
+      e.preventDefault();
+      return false;
+    });
+      $containere.children('div').each(function() {
+        addDeleteFile($(this));
+      });
+    
+    function addFichier($containere) {
+      var template1 = $containere.attr('data-prototype')
+        .replace(/__name__label__/g, ' ')
+        .replace(/__name__/g, indexe)
+      ;
+       var $prototype1 = $(template1);
+     addDeleteFile($prototype1);
+      $containere.append($prototype1);
+      indexe++;
+    }
+    function addDeleteFile($prototype1) {
+      var $deleteLink1 = $('<div style="margin-top: 33px;"> <a href="#"><span class="glyphicon glyphicon-remove" style="margin-left: 6px;font-size:17px;"></span></a></div><br><br>');
+      $prototype1.append($deleteLink1);
+      $deleteLink1.click(function(e) {
+        $prototype1.remove();
+        e.preventDefault(); 
+        return false;
+      });
+    }
+  });
+
+ $(document).ready(function() {
+   var $containeret = $('div#profil_commentaires');
+     var indexet = $containeret.find(':input').length;
+
+      addCom($containeret);
+    
+    function addCom($containeret) {
+      var templatet = $containeret.attr('data-prototype')
+        .replace(/__name__label__/g, ' ')
+        .replace(/__name__/g, indexet)
+      ;
+       var $prototypet = $(templatet);
+      $containeret.append($prototypet);
+      indexet++;
+    }
+  });
+
+</script>
+<style>
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  padding:10px;
+  color:#555;
+  font-size:16px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing:3px;
+  text-decoration:none;
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+div#contact_domaines.form-inline {
+   width: 400px;
+   margin-left: 40px;
+}
+
+#contact_domaines_2 {
+   margin-left: 20px;
+}
+
+#contact_domaines_6 {
+   margin-left: 2px;
+}
+
+#actions_dateAction_date_year {
+   margin-right: 20px;
+}
+
+.checkbox {
+    margin-right : 20px;
+}
+</style>
+
+
+  
+
+{% endblock %}

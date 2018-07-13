@@ -1,0 +1,433 @@
+
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block title %}
+  Accueil - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+
+<table style="width:100%;font-size:30px;">
+  <tr>
+    <td style='float:left;'>
+     Liste des profils {% if nbprofils is defined %}({{ nbprofils }}) {% endif %}
+    </td>
+
+    <td style='float:right;vertical-align:bottom;'><a href="{{path('cv_profil_add')}}" class="btn btn-success" style="margin-right:5px;">
+      Ajouter un nouveau profil
+    </a>
+    </td> 
+
+
+    <td style='float:right;vertical-align:bottom;'>
+
+    {% if post is defined %}
+         <a href="{{ path('cv_profil_liste') }}" class="btn btn-primary" style="color: #333;
+    background-color: #dddddd;
+    border-color: #dddddd;
+    margin-right:20px;">
+        Afficher tous les profils</a>
+
+    {% else %}
+         <a href="{{ path('cv_profil_liste') }}" class="btn btn-primary inactiveLink" style="color: #fff;
+    background-color: #dddddd;
+    border-color: #dddddd;
+    margin-right:20px;">
+        Afficher tous les profils</a>
+    {% endif %}
+    </td>
+  </tr>
+</table>
+<hr>
+
+{% if count is defined %}
+<br>
+<table>
+<tr>
+<td style="padding-right: 10px;">
+<div class="well well-sm">
+<b>{% if count is empty %} 0 {% endif %} {% for counti in count %}{{ counti.COU }} {% endfor %}</b> résultat(s) dans la recherche
+</div></td>
+{% endif %}
+
+{% if datas is defined %}
+{% for data in datas %}
+{% if data == '' %}
+
+{% else %}
+<td style="padding-right: 10px;">
+<div class="well well-sm">
+<b>{{ data }}</b> 
+</div></td>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if post5 is defined %}
+{% for data in post5 %}
+{% if data == '' %}
+
+{% else %}
+<td style="padding-right: 10px;">
+<div class="well well-sm">
+<b>{{ data }}</b> 
+</div></td>
+{% endif %}
+{% endfor %}
+{% endif %}
+
+{% if post2 is defined %}
+{% for postiche in post2 %}
+
+{% if postiche == '' %}
+
+{% else %}
+<td style="padding-right: 10px;">
+<div class="well well-sm">
+<b>{{ postiche }}</b> 
+</div></td>
+{% endif %}
+{% endfor %} 
+{% endif %}
+
+
+
+{% if post3 is defined %}
+{% for postiche in post3 %}
+
+{% if postiche == '' %}
+
+{% else %}
+<td style="padding-right: 10px;">
+<div class="well well-sm">
+    <b> 
+{% for statut in listStatut %}
+{% if postiche == statut.id  %}
+    {{ statut.nom }}
+{% endif %}
+{% endfor %} 
+  </b> 
+    </div>
+{% endif %}
+</td>
+{% endfor %} 
+{% endif %}
+
+
+
+{% if post4 is defined %}
+{% for postiche in post4 %}
+
+{% if postiche == '' %}
+
+{% else %}
+<td style="padding-right: 10px;">
+<div class="well well-sm"><b> 
+  {% for ri in listRi %}
+{% if postiche == ri.id  %}
+    {{ ri.prenom }}
+{% endif %}
+{% endfor %} 
+  </b> 
+    </div>
+</td>
+{% endif %}
+{% endfor %} 
+{% endif %}
+
+
+{% if date_debut is defined %}
+<td style="padding-right: 10px;">
+<div class="well well-sm">
+Du <b>{{ date_debut|date('d/m/Y') }}</b> au <b>{{ date_fin|date('d/m/Y') }}</b>
+</div>
+</td>
+{% endif %}
+
+</tr>
+</table>
+
+
+<br>
+<div class="collapse-group">
+  <div class="panel panel-default" style="
+    margin-bottom: 5px;">
+    <div class="panel-heading" role="tab" id="headingOne">
+    <table style="width: 100%;">
+    <tr>
+    <td>
+    <form action="{{ path('cv_profil_search') }}" method="post">
+      <div class="input-group" style="width: 80%;">
+      <input data-min-length='1' list="browsers" name="search" class="form-control" placeholder="Prénom, Nom, Intitulé...">
+      <datalist id="browsers">
+          {% for Tags in listProfils %}
+    <option label = "{{ Tags.intitule }}" value="{{ Tags.intitule }}">
+      <option label = "{{ Tags.nom }}" value="{{ Tags.nom }}">
+         <option label = "{{ Tags.prenom }}" value="{{ Tags.prenom }}">
+  {% endfor %}
+
+    {% for Comp in listComp %}
+    <option label = "{{ Comp.intitule }}" value="{{ Comp.intitule }}">
+  {% endfor %}
+  </datalist>
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="submit">Rechercher</button>
+      </span>
+      </div>
+      </td>
+<td>
+      <h4 class="panel-title" style="float: right;width: 55%;">
+        <a role="button" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne" class="trigger collapsed">
+          Filtres de recherche
+        </a>
+      </h4>
+</td>
+</tr>
+      </table>
+    </div>
+
+    <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+      <br>       
+  <div class="row">  
+ <b style="float:left;margin-left: 15px;margin-top: 7px;">Ajouter des compétences :</b>
+  <div class="col-md-2">
+ <input list="browsers1" name="oblig[]" class="form-control" placeholder="Compétence 1">
+      <datalist id="browsers1">
+          {% for Tags in listTags %}
+    <option value="{{ Tags.intitule }}">
+  {% endfor %}
+  </datalist>
+ </div>
+  <div class="col-md-2">
+ <input list="browsers2" name="oblig[]" class="form-control" placeholder="Compétence 2">
+      <datalist id="browsers2">
+          {% for Tags in listTags %}
+    <option value="{{ Tags.intitule }}">
+  {% endfor %}
+  </datalist>
+ </div>
+  <div class="col-md-2">
+ <input list="browsers3" name="oblig[]" class="form-control" placeholder="Compétence 3">
+      <datalist id="browsers3">
+          {% for Tags in listTags %}
+    <option value="{{ Tags.intitule }}">
+  {% endfor %}
+  </datalist>
+ </div>
+
+  </div>
+  <hr>
+     <table style="width:100%;">
+  <tr>
+  <td><b>Domaine(s) : </b></td>
+  <td><b>Statut(s) :</b></td>
+  <td><b>Référent(s) Interne :</b></td>
+  <td><b>Période de création :</b></td>
+  </tr>
+  <tr>
+  <td>
+  <label class="checkbox-inline"><input type="checkbox" name="domaine[]" value=""checked>Tous</label>
+     {% for Domaines in listDomaines %}
+  <label class="checkbox-inline"><input type="checkbox" name="domaine[]" value="{{ Domaines.nom }}">{{ Domaines.nom }}</label>
+  {% if (loop.index is odd) %}
+  <br>
+  {% endif %}
+  {% endfor %}
+  </td>
+  <td>
+  <label class="checkbox-inline"><input type="checkbox" name="statut[]" value="" checked>Tous</label>
+   {% for Statut in listStatut %}
+  <label class="checkbox-inline"><input type="checkbox" name="statut[]" value="{{ Statut.id }}">{{ Statut.nom }}</label>
+  {% if (loop.index is odd) %}
+  <br>
+  {% endif %}
+  {% endfor %}
+  </td>
+  <td>
+  <select name="ri[]" class="form-control" style="width: 70%;" multiple>
+  <option value="" selected>Tous</option>
+     {% for ri in listRi %}
+  <option value="{{ ri.id }}">{{ ri.prenom }}</option>
+  {% endfor %}
+  </select>
+  </td>
+  <td>
+  <br>
+  <input type="date" min="2018-05-01" name="date_debut" value="2018-05-01" class="form-control"><br>
+  <input type="date" min="2018-05-01" name="date_fin" value="{{ 'now'|date('Y-m-d') }}" class="form-control">
+  </td>
+  </tr>
+  <tr>
+  <td></td>
+  <td></td>
+  <td></td>
+  <td></td>
+  </tr>
+</table><br>
+
+<button class="btn btn-secondary" type="submit" style="float:right;margin-top: 20px;">Rechercher</button>
+    </form>
+      </div>
+     </div>
+    </div>
+    </div>
+<span style="font-size: 12px;margin-left: 4px;">* Les mots-clés doivent être séparés d'un "<b>/</b>"</span>
+
+
+
+<hr><br>
+
+<table id="myTable" class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th onclick="sortTable(0)" scope="col">Prénom <i class="fa fa-fw fa-sort"></i></th>
+      <th onclick="sortTable(1)" scope="col">Nom <i class="fa fa-fw fa-sort"></i></th>
+      <th onclick="sortTable(2)" scope="col">RI <i class="fa fa-fw fa-sort"></i></th>
+      <th onclick="sortTable(3)" scope="col">Intitulé <i class="fa fa-fw fa-sort"></i></th>
+      <th onclick="sortTable(4)" scope="col">Statut <i class="fa fa-fw fa-sort"></i></th>
+      <th onclick="sortTable(5)" scope="col">Domaine(s) <i class="fa fa-fw fa-sort"></i></th>
+      <th onclick="sortTable(6)" scope="col">Date de création <i class="fa fa-fw fa-sort"></i></th>
+    </tr>
+  </thead>
+  {% for Profil in listProfils %}
+  <tbody data-link="row" class="rowlink">
+    <tr>
+       
+      <td> <div class="hidden">{{ Profil.prenom }}</div><a href="{{ path('cv_profil_view', {'id': Profil.id}) }}">{{ Profil.prenom }}</td>
+      <td> <div class="hidden">{{ Profil.nom|upper }}</div>  <a href="{{ path('cv_profil_view', {'id': Profil.id}) }}"> {{ Profil.nom|upper }}</td>
+      <td>{{ Profil.ri.prenom }}</td>
+      <td>{{ Profil.intitule }}</td>
+      <td>{{ Profil.statut.nom }}</td>
+      <td>{% for Domaine in Profil.Domaines %}
+           {{ Domaine.nom }} <br>
+        {% endfor %}</td>
+      <td> {{ Profil.dateCrea|date('d/m/Y') }}</td>
+    </tr>
+    {% else %}
+      <td colspan = 7>Pas (encore !) de profils</td>
+    {% endfor %}
+  </tbody>
+</table>
+
+
+<style>
+
+.inactiveLink {
+   pointer-events: none;
+   cursor: default;
+}
+
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  padding:15px;
+  color:#555;
+  font-size:14px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing:3px;
+  text-decoration:none;
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+th {
+    cursor: pointer;
+}
+
+
+</style>
+
+<script>
+
+
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable");
+  switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc"; 
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+    } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+{% endblock %}
+
+
+

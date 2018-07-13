@@ -1,0 +1,42 @@
+login:
+    path: /login
+    defaults:
+        _controller: CVUserBundle:Security:login
+
+cv_profil:
+    resource: "@CVProfilBundle/Resources/config/routing.yml"
+    prefix:   /
+
+cv_search:
+    path:      /globalsearch
+    defaults: { _controller: AppBundle:Default:search }
+
+cv_settings:
+    path:      /settings
+    defaults: { _controller: CVUserBundle:Security:modifpwd }
+
+cv_gestion:
+    path:      /gestion
+    defaults: { _controller: CVUserBundle:Security:gestion }
+
+cv_gestion_ri:
+    path:      /gestionri
+    defaults: { _controller: CVUserBundle:Security:gestionri }
+
+cv_agenda:
+    path:      /agenda
+    defaults: { _controller: CVUserBundle:Security:agenda }
+
+cv_searchaction:
+    path:      /search_action
+    defaults: { _controller: CVUserBundle:Security:search }
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+login_check:
+    path: /login_check
+
+logout:
+    path: /logout

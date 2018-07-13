@@ -1,0 +1,86 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block body %}
+
+
+<h3>Rappels des actions à venir</h3><hr>
+<br>
+<table>
+  <tr>
+    <form action="{{ path('cv_searchaction') }}" method="post">
+
+    {% if isnonvalide == 'oui' %}
+    <td style="padding-right: 25px;"><button style="width: 100px;" class="btn btn-primary" type="submit" name="nonvalide">À valider ({% for nonvalide in countnonvalide  %}{% if nonvalide > 0 %}{{ nonvalide }}{% else %}0{% endif %}{% endfor %})</button></td>
+    {% else %}
+    <td style="padding-right: 25px;"><button style="width: 100px;" class="btn btn-secondary" type="submit" name="nonvalide">À valider ({% for nonvalide in countnonvalide  %}{% if nonvalide > 0 %}{{ nonvalide }}{% else %}0{% endif %}{% endfor %})</button></td>
+    {% endif %}
+
+    {% if isavenir == 'oui' %}
+    <td style="padding-right: 25px;"><button style="width: 100px;" class="btn btn-primary" type="submit" name="avenir">À venir ({% for avenir in countavenir %}{% if avenir > 0 %}{{ avenir }}{% else %}0{% endif %}{% endfor %})</button></td>
+    {% else %}
+    <td style="padding-right: 25px;"><button style="width: 100px;" class="btn btn-secondary" type="submit" name="avenir">À venir ({% for avenir in countavenir %}{% if avenir > 0 %}{{ avenir }}{% else %}0{% endif %}{% endfor %})</button></td>
+    {% endif %}
+
+    {% if isvalide == 'oui' %}
+    <td><button style="width: 100px;" class="btn btn-primary" type="submit"  name="valide">Validées ({% for valide in countvalide %}{% if valide > 0 %}{{ valide }}{% else %}0{% endif %}{% endfor %})</button></td>
+    {% else %}
+    <td><button style="width: 100px;" class="btn btn-secondary" type="submit"  name="valide">Validées ({% for valide in countvalide %}{% if valide > 0 %}{{ valide }}{% else %}0{% endif %}{% endfor %})</button></td>
+    {% endif %}
+
+  </form>
+  </tr>
+</table>
+<br><br>
+
+<table class="table table-striped table-bordered table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Client</th>
+      <th scope="col">Interlocuteur</th>
+      <th scope="col">Nom Action</th>
+      <th scope="col">Type Action</th>
+      <th scope="col">Date de création</th>
+      <th scope="col">Date Action à venir</th>
+      <th scope="col">Redéfinir une date de rappel</th>
+      <th scope="col">Validation</th>
+    </tr>
+     </thead> 
+       {% for Actions in listActions %}
+    <tbody data-link="row" class="rowlink">
+      <tr>
+        <td><a href="{{ path('cv_profil_viewclient', {'id': Actions.interlocuteur.client.id}) }}">{{ Actions.interlocuteur.client.nom }}</a></td>
+        <td><a href="{{ path('cv_profil_viewcontact', {'id': Actions.interlocuteur.id}) }}"> {{ Actions.interlocuteur.prenom }} {{ Actions.interlocuteur.nom }}</td>
+        <td><a href="{{ path('cv_profil_viewaction', {'id': Actions.id}) }}">{{ Actions.nom }}</a></td>
+        <td>{{ Actions.type.nom }}</td>
+        <td>{{ Actions.dateCrea|date('d/m/Y') }}</td>
+        <td>
+            {% if Actions.dateAction < date() %}
+          <span style="color:red;">
+              {% endif %}
+          {{ Actions.dateAction|date('d/m/Y') }}</span></td>
+
+        <form id="newdate" action="{{ path('cv_searchaction') }}" method="post">
+        <td style="text-align: center;"><input type="date" value="{{ Actions.dateAction|date('Y-m-d') }}" name="newdate"></input>
+        <button style="margin-left:10px;" class="btn btn-secondary" type="submit" value="{{ Actions.id }}" name="newdatevalidation">Ok</button></td>
+        </form>
+        {% if Actions.valide > 0 %}
+
+        <td style="text-align: center;"><span style="color:green;"><i class="glyphicon glyphicon-ok"></i></span></td>
+
+          {% else %}
+
+        <form action="{{ path('cv_searchaction') }}" method="post">
+        <td style="text-align: center;"><button class="btn btn-secondary" type="submit" name="validation" value="{{ Actions.id }}"><i class="glyphicon glyphicon-ok"></i></button></td>
+        </form>
+        {% endif %}
+
+    </tr>
+    {% else %}
+      <tr>
+        <td colspan = "8" style="text-align:center">Pas (encore !) d'actions</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

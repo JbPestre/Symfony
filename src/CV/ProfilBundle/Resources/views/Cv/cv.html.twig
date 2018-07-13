@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Outil CV{% endblock %}</title>
+
+  {% block stylesheets %}
+    {# On charge le CSS de bootstrap depuis le site directement #}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  {% endblock %}
+</head>
+
+<body><br>
+
+<div class="container">
+
+<a href="{{ path('cv_homecv') }}" class="btn btn-default" style="margin-left: 15px;">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à la liste
+    </a>
+
+<a href="{{ path('cv_edit', {'id': Cv.id}) }}" class="btn btn-warning" style="margin-left: 15px;">
+      Modifier ce cv
+    </a>
+
+<a href="{{ path('cv_genere_pdf', {'id': Cv.id}) }}" class="btn btn-primary" style="margin-left: 15px;">
+      Export PDF
+    </a>
+<hr>
+<div style="transform: scale(0.95);">
+
+
+<h4><img
+  src="http://www.trsb.net/wp-content/uploads/2017/03/NEW-LOGO-TRSB.png"
+  alt="TRSB" width="200" height="100"/><span style="float:right">{{ Cv.Profil.prenom }} <br>{{ Cv.Profil.statut.nom }}</span></h4>
+<br><br><br>
+
+<div style="text-align: center;margin-left: auto;margin-right: auto;width: 70%;border-style: solid;
+    border-width: 1px;
+    border-color: lightgrey; ">
+<h3 style="color: #1f75ba;">{{ Cv.intitule}}</h3>
+<h4>{{ Cv.descriptif}}</h4>
+</div><br><br>
+
+
+{% for i in 1..6 %}
+    
+{% if Cv.posForma == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockForma}}</h3><hr><br>
+
+{% for formation in Cv.Formations %}
+<b>{{ formation.anneeDebut}} {% if formation.anneeFin is not empty%} - {{ formation.anneeFin}} {% endif %}</b> / {{ formation.nomFormation}}<br>
+{{ formation.descriptif}}<br><br><br>
+{% endfor %}
+
+
+{% elseif Cv.posComp == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockComp}}</h3><hr><br>
+
+{% for Comp in Cv.Competences %}
+<b>{{ Comp.intitule}}</b>
+<br>
+<p>{{ Comp.descriptif|nl2br }}</p>
+{% if Comp.tags is not empty %}
+<b>Outils : </b>
+{% for Tags in Comp.tags %}
+{% if loop.last %}
+
+  {{ Tags.intitule }} 
+
+  {% else %}
+
+{{ Tags.intitule }} /
+
+  {% endif %}
+{% endfor %}
+<br><br>
+  {% endif %}
+  <br>
+
+{% endfor %}
+
+{% elseif Cv.posLang == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockLang}}</h3><hr><br>
+
+{% for langue in Cv.Langues %}
+<b>{{ langue.langage}} : </b>{{ langue.niveau}}<br>
+{% endfor %}
+
+
+{% elseif Cv.posExp == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockExp}}</h3><hr><br>
+
+{% for Exp in Cv.Experiences %}
+<b>{{ Exp.annee}} / <span style="color: #1f75ba;">{{ Exp.nomSociete | upper}}</span> {% if Exp.ville is not empty%} - {{ Exp.ville}} {% endif %}</b>
+<br>
+<p>{{ Exp.descriptif|nl2br }}</p><br>
+
+{% if Exp.tags is not empty %}
+<b>Environnements Techniques :</b> 
+{% for Tags in Exp.tags %}
+{% if loop.last %}
+
+  {{ Tags.intitule }} 
+
+  {% else %}
+
+{{ Tags.intitule }},
+
+  {% endif %}
+{% endfor %}
+<br><br><br>
+  {% endif %}
+{% endfor %}
+
+
+{% elseif Cv.posLibre1 == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockLibre1}}</h3><hr><br>
+
+<p>{{ Cv.blocLibre1|raw  }}</p><br>
+
+
+{% elseif Cv.posLibre2 == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockLibre2}}</h3><hr><br>
+
+<p>{{ Cv.blocLibre2|raw  }}</p><br>
+
+
+{% endif %}
+
+
+{% endfor %} 
+
+</div>
+</div>
+<br><br><br>
+
+ {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+
+<style>
+hr {
+  height: 10px;
+  border: 0;
+  box-shadow: 0 10px 10px -10px #8c8b8b inset;
+}
+</style>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+{# src/CV/PlatformBundle/Resources/view/Profil/view.html.twig #}
+
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block title %}
+  Lecture d'une Action
+{% endblock %}
+
+{% block body %}
+<table style="margin-bottom: 10px;">
+  <tr>
+    <td><h2>{{ Actions.nom }}</h2>  </td>
+
+ <td style="vertical-align: bottom;padding-bottom: 9.5px;padding-left: 30px;">
+
+    <a href="{{ path('cv_profil_editaction', {'id': Actions.id}) }}" style="background-color: #d5d3d3a6;margin-right:5px;" class="btn btn-default">
+      <i class="glyphicon glyphicon-pencil"></i>
+    </a>
+    <a href="{{ path('cv_profil_deleteaction', {'id': Actions.id}) }}" style="background-color: #d5d3d3a6;" class="btn btn-default">
+      <i class="glyphicon glyphicon-trash"></i>
+    </a>
+    {% if Actions.valide == 0 %}
+      <form action="{{ path('cv_profil_viewaction', {'id': Actions.id}) }}" method="post">
+        <button style="margin-left:5px;" class="btn btn-success" type="submit" name="validation" value="{{ Actions.id }}">Valider cette action</button>
+        </form>
+    {% else %}
+      <form action="{{ path('cv_profil_viewaction', {'id': Actions.id}) }}" method="post">
+        <button style="margin-left:5px;" class="btn btn-danger" type="submit" name="invalidation" value="{{ Actions.id }}">Invalider cette action</button>
+        </form>
+      {% endif %}
+ <a style="margin-left:5px;" href="{{ path('cv_agenda') }}" class="btn btn-default">
+      Retour aux actions
+      <i class="glyphicon glyphicon-chevron-right"></i>
+    </a>
+</td>
+  </tr>   
+</table>
+
+<div class="pull-right" style="margin-right:55px;margin-top:40px;">
+
+{% if Actions.fichiers is not empty %}
+<div class="well"  style="width:200px;">
+<h4>Fichiers :</h4>  
+<table><tr><td>
+ {% for Fichier in Actions.fichiers %}
+ <tr>
+
+    <td style="padding-right: 10px;"><li>{{ Fichier.name }}</td>
+      {% if Fichier.url == 'pdf' or Fichier.url == 'png'  %}
+    <td style="padding-right: 10px;"><a href="{{ asset('/Symfony/web/uploads/img/'~Fichier.name ~ '.' ~ Fichier.url) }}" target="_blank"><span     class="glyphicon glyphicon-eye-open"></span></a></td>
+    {% endif %}
+    <td>
+        <form id="{{ Fichier.id }}" action="{{ path('cv_profil_downloadclient', {'filename': Fichier.name ~ '.' ~ Fichier.url}) }}" method="post">       
+        <a href="javascript:{}" onclick="document.getElementById('{{ Fichier.id }}').submit();">
+        <span class="glyphicon glyphicon-download-alt"></span></a>
+        </form>
+    </td>
+    </li>
+ </tr>
+
+{% endfor %}
+ </table>
+</div>
+{% endif %}
+
+</div>
+
+
+<i>Par {{ Actions.ri.prenom }}, le {{ Actions.dateCrea|date('d/m/Y') }}</i>
+  <br><br>
+
+<table class="table" style="width:65%;">
+  <tbody>
+    <tr>
+      <th scope="col" width="260px;">Type d'action</th>
+      <td>{{ Actions.type.nom }}</td>
+    </tr>
+    <tr>
+      <th scope="col" width="260px;">Interlocuteur</th>
+      <td><a href="{{ path('cv_profil_viewcontact', {'id': Actions.interlocuteur.id}) }}"> {{ Actions.interlocuteur.prenom }} {{ Actions.interlocuteur.nom }}</td>
+    </tr>
+        <tr>
+      <th scope="col" width="260px;">Entreprise</th>
+      <td>{% for Client in listClients %}<a href="{{ path('cv_profil_viewclient', {'id': Client.client.id}) }}">{{ Client.client.nom }}{% endfor %}
+      </td>
+    </tr>
+     <tr>
+        <th scope="col">Date de la prochaine action</th>         
+        <td>{{ Actions.dateAction|date('d/m/Y') }}</td>
+    </tr>
+   <tr>
+        <th style="vertical-align: middle;" scope="col">Redéfinir la date de rappel</th>         
+           <form action="{{ path('cv_profil_viewaction', {'id': Actions.id}) }}" method="post">
+        <td><input type="date" value="{{ Actions.dateAction|date('Y-m-d') }}" name="newdate"></input>
+        <button style="margin-left:10px;" class="btn btn-secondary" type="submit" value="{{ Actions.id }}" name="newdatevalidation">Modifier</button></td>
+        </form>
+    </tr>
+    <tr>
+        <th scope="col">Détails / Commentaires :</th>         
+        <td></td>
+    </tr>
+    <tr><td colspan="2" style="border-top-color: white;">
+          {{ Actions.commentaires|raw }}
+      </td>
+    </td>
+  </tbody>  
+</table>
+<br>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<style>
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+form {
+    display: inline;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  color:#337ab7;
+  font-size:14px;
+  text-decoration:none;    
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    background-color: #6785b2;
+    border-radius: 10px;
+}
+</style>
+
+{% endblock %}

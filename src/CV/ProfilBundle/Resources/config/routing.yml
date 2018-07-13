@@ -1,0 +1,150 @@
+cv_profil_liste:
+    path:      /profils
+    defaults: { _controller: CVProfilBundle:Profil:liste }
+
+cv_attache:
+    path:      /selec_client/{id_profil}
+    defaults: { _controller: CVProfilBundle:CV:attache }
+
+cv_attachedupl:
+    path:      /selec_client_dupl/{id}
+    defaults: { _controller: CVProfilBundle:CV:attachedupl }
+
+cv_exemple:
+    path:      /cv/{id}/{id_profil}
+    defaults: { _controller: CVProfilBundle:CV:cv }
+
+cv_genere:
+    path:      /cv/{id}
+    defaults: { _controller: CVProfilBundle:CV:viewcv }
+
+cv_test:
+    path:      /test
+    defaults: { _controller: CVProfilBundle:CV:testcv }
+
+cv_duplicate:
+    path:      /duplicate/{id}/{id_client}
+    defaults: { _controller: CVProfilBundle:CV:duplicatecv }    
+
+cv_edit:
+    path:      /editcv/{id}
+    defaults: { _controller: CVProfilBundle:CV:editcv }
+
+cv_homecv:
+    path:      /cv
+    defaults: { _controller: CVProfilBundle:CV:indexcv }
+
+cv_genere_pdf:
+    path:      /pdf/{id}
+    defaults: { _controller: CVProfilBundle:CV:pdf }
+
+cv_deletecv:
+    path:      /deletecv/{id}
+    defaults: { _controller: CVProfilBundle:CV:deletecv }  
+
+cv_profil_searchcv:
+    path:      /searchcv
+    defaults: { _controller: CVProfilBundle:CV:searchcv }
+
+cv_profil_searchcvdupl:
+    path:      /searchcv_dupl
+    defaults: { _controller: CVProfilBundle:CV:searchcvdupl }            
+
+cv_profil_search:
+    path:      /search
+    defaults: { _controller: CVProfilBundle:Profil:search }    
+
+cv_profil_view:
+    path:      /profil/{id}
+    defaults: { _controller: CVProfilBundle:Profil:view }
+
+cv_profil_viewcontact:
+    path:      /contact/{id}
+    defaults: { _controller: CVProfilBundle:Contact:view }
+
+cv_profil_addcontact:
+    path:      /contact_add/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:add } 
+
+cv_profil_addaction:
+    path:      /action_add/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:addaction } 
+
+cv_profil_viewaction:
+    path:      /action_view/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:viewaction} 
+
+cv_profil_editaction:
+    path:      /action_edit/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:editaction} 
+
+cv_profil_deleteaction:
+    path:      /action_delete/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:deleteaction} 
+
+cv_profil_editcontact:
+    path:      /contact_edit/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:edit } 
+
+cv_profil_deletecontact:
+    path:      /contact_delete/{id} 
+    defaults: { _controller: CVProfilBundle:Contact:delete } 
+
+cv_profil_edit:
+    path:      /edit/{id}
+    defaults: { _controller: CVProfilBundle:Profil:edit }
+
+cv_profil_delete:
+    path:      /delete/{id}
+    defaults: { _controller: CVProfilBundle:Profil:delete }
+
+cv_profil_download:
+    path:  /download/{filename}
+    defaults: { _controller: CVProfilBundle:Profil:download }
+
+cv_profil_downloadclient:
+    path:  /downloadclient/{filename}
+    defaults: { _controller: CVProfilBundle:Client:download }
+
+cv_profil_edit_com:
+    path:      /profil/{id}/{id_profil}
+    defaults: { _controller: CVProfilBundle:Profil:editcom }
+
+cv_profil_delete_com:
+    path:      /delete_com/{id}/{id_profil}
+    defaults: { _controller: CVProfilBundle:Profil:deletecom }
+            
+cv_profil_add:
+    path:      /add
+    defaults: { _controller: CVProfilBundle:Profil:add } 
+
+cv_profil_homeclient:
+    path:      /client
+    defaults: { _controller: CVProfilBundle:Client:index }
+
+cv_profil_homecontact:
+    path:      /allcontact
+    defaults: { _controller: CVProfilBundle:Client:indexcontact }
+    
+cv_profil_viewclient:
+    path:      /client/{id}
+    defaults: { _controller: CVProfilBundle:Client:view }
+
+cv_profil_editclient:
+    path:      /client_edit/{id}
+    defaults: { _controller: CVProfilBundle:Client:edit }
+
+cv_profil_deleteclient:
+    path:      /client_delete/{id}
+    defaults: { _controller: CVProfilBundle:Client:delete } 
+               
+cv_profil_addclient:
+    path:      /client_add
+    defaults: { _controller: CVProfilBundle:Client:add } 
+
+cv_profil_searchclient:
+    path:      /client_search
+    defaults: { _controller: CVProfilBundle:Client:search }    
+
+
+

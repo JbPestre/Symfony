@@ -1,0 +1,20 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier un commentaire - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <p>
+     Commentaire en date du <b>{{ Com.dateCrea|date('d/m/Y') }}</b> par <b>{{ Com.RI.username}} </b>
+  </p><br>
+
+ {{ form_start(form) }}
+
+{{ form_row(form.champ, {'label': 'Modifier un commentaire'}) }}
+{{ form_widget(form.modifier, {'attr': {'class': 'btn btn-success'}}) }} 
+ {{ form_rest(form) }}
+  {{ form_end(form) }}
+
+{% endblock %}

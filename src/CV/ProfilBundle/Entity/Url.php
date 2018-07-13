@@ -1,0 +1,99 @@
+<?php
+
+namespace CV\ProfilBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * Url
+ *
+ * @ORM\Table(name="url")
+ * @ORM\Entity(repositoryClass="CV\ProfilBundle\Repository\UrlRepository")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class Url
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="libelle", type="string", length=255)
+     */
+    private $libelle;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="urlchamp", type="string", length=255)
+     */
+    private $urlchamp;
+
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set libelle
+     *
+     * @param string $libelle
+     *
+     * @return Url
+     */
+    public function setLibelle($libelle)
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
+    /**
+     * Get libelle
+     *
+     * @return string
+     */
+    public function getLibelle()
+    {
+        return $this->libelle;
+    }
+
+
+    /**
+     * Set urlchamp
+     *
+     * @param string $urlchamp
+     *
+     * @return Url
+     */
+    public function setUrlchamp($urlchamp)
+    {
+        $this->urlchamp = $urlchamp;
+
+        return $this;
+    }
+
+    /**
+     * Get urlchamp
+     *
+     * @return string
+     */
+    public function getUrlchamp()
+    {
+        return $this->urlchamp;
+    }
+}

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>{% block title %}Outil CV{% endblock %}</title>
+
+  
+</head>
+
+<body><br>
+
+<div class="container">
+
+
+<div style="transform: scale(0.95);"><br><br>
+<h3 style="color: #1f75ba;">{{ Cv.intitule}}</h3>
+<h4>{{ Cv.descriptif}}</h4>
+<br><br>
+
+
+{% for i in 1..6 %}
+    
+{% if Cv.posForma == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockForma}}</h3><hr><br><br>
+
+{% for formation in Cv.Formations %}
+<b>{{ formation.anneeDebut}} - {{ formation.anneeFin}}</b><br>
+{{ formation.nomFormation}}<br>
+{{ formation.descriptif}}}<br>
+{% endfor %}
+
+
+{% elseif Cv.posComp == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockComp}}</h3><hr><br><br>
+
+{% for Comp in Cv.Competences %}
+<b>{{ Comp.intitule}}</b>
+<br>
+<p>{{ Comp.descriptif|nl2br }}</p><br>
+<b>Outils : </b>
+{% for Tags in Comp.tags %}
+{% if loop.last %}
+
+  {{ Tags.intitule }} 
+
+  {% else %}
+
+{{ Tags.intitule }} /
+
+  {% endif %}
+{% endfor %}
+{% endfor %}
+
+
+
+{% elseif Cv.posLang == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockLang}}</h3><hr><br><br>
+
+{% for langue in Cv.Langues %}
+<b>{{ langue.langage}} : </b>{{ langue.niveau}}<br>
+{% endfor %}
+
+
+{% elseif Cv.posExp == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockExp}}</h3><hr><br><br>
+
+{% for Exp in Cv.Experiences %}
+<b>{{ Exp.annee}} / <span style="color: #1f75ba;">{{ Exp.nomSociete}}</span> - {{ Exp.ville}}</b>
+<br><br>
+<p>{{ Exp.descriptif|nl2br }}</p><br>
+<b>Environnements Techniques :</b> 
+{% for Tags in Exp.tags %}
+{% if loop.last %}
+
+  {{ Tags.intitule }} 
+
+  {% else %}
+
+{{ Tags.intitule }},
+
+  {% endif %}
+{% endfor %}
+<br><br><br>
+{% endfor %}
+
+{% elseif Cv.posLibre1 == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockLibre1}}</h3><hr><br>
+
+<p>{{ Cv.blocLibre1|raw  }}</p><br>
+
+
+{% elseif Cv.posLibre2 == i %}
+
+
+<br><br><h3 style="color: #1f75ba;">{{ Cv.blockLibre2}}</h3><hr><br>
+
+<p>{{ Cv.blocLibre2|raw  }}</p><br>
+
+
+{% endif %}
+
+
+{% endfor %} 
+
+</div>
+</div>
+<br><br><br>
+
+ {% block javascripts %}
+    {# Ajoutez ces lignes JavaScript si vous comptez vous servir des fonctionnalités du bootstrap Twitter #}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  {% endblock %}
+
+
+  </body>
+</html>

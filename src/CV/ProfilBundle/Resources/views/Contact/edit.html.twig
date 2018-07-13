@@ -1,0 +1,135 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+
+{% block title %}
+  Modifier un interlocuteur
+{% endblock %}
+
+
+{% block body %}
+
+  <h2>Ajouter un interlocuteur</h2>
+  <br>
+<div class="well">
+
+
+{{ form_start(form) }}
+
+<div class="row">
+<div class="col-sm-3">
+{% if form.dateCrea is defined %}
+{{ form_row(form.dateCrea, {'label': 'Date de création'}) }}
+{% endif %}
+</div>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+{{ form_row(form.nom, {'label': 'Nom *'}) }}
+</div>
+  <div class="col-sm-6">
+{{ form_row(form.prenom, {'label': 'Prénom *'}) }}
+  </div>
+  </div>
+
+<div class="row">
+	<div class="col-sm-6">
+	{{ form_row(form.poste, {'label': 'Poste *'}) }}
+	{{ form_row(form.email, {'label': 'Email *'}) }}
+	</div>
+	<div class="col-sm-6">  
+   {{ form_label(form.domaines, 'Domaine(s) *') }}
+   <br><br>
+	{{ form_widget(form.domaines) }} 
+    </div>
+ </div>
+<br>
+<div class="row">
+	<div class="col-sm-4">
+	{{ form_row(form.tel1, {'label': 'Téléphone 1 *'}) }}
+	</div>
+	<div class="col-sm-4">  
+	{{ form_row(form.tel2, {'label': 'Téléphone 2 (facultatif)'}) }} 
+    </div>
+    <div class="col-sm-4">  
+	{{ form_row(form.tel3, {'label': 'Téléphone 3 (facultatif)'}) }} 
+    </div>
+ </div>
+
+<br><br>
+*Champs obligatoires
+<br><br>
+{{ form_widget(form.modifier, {'attr': {'class': 'btn btn-success'}}) }}
+{{ form_rest(form) }}
+  {{ form_end(form) }}
+</div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<style>
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  padding:10px;
+  color:#555;
+  font-size:16px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing:3px;
+  text-decoration:none;
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+div#contact_edit_domaines.form-inline {
+   width: 400px;
+   margin-left: 40px;
+}
+
+#contact_edit_domaines_2 {
+   margin-left: 20px;
+}
+
+#contact_edit_domaines_6 {
+   margin-left: 2px;
+}
+
+.checkbox {
+    margin-right : 20px;
+}
+</style>
+
+
+  
+
+{% endblock %}

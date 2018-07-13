@@ -1,0 +1,244 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block title %}
+  Modifier un client - {{ parent() }}
+{% endblock %}
+
+{% block body %}
+
+  <h2>Modifier une Entreprise</h2>
+
+  <div class="well">
+
+
+{{ form_start(form) }}
+
+{% if form.dateCrea is defined %}
+{{ form_row(form.dateCrea, {'label': 'Date de création'}) }}
+{% endif %}
+<div class="row">
+    <div class="col-sm-6">
+{{ form_row(form.nom, {'label': 'Nom de l\'entreprise *'}) }}
+</div>
+  <div class="col-sm-6">
+{{ form_row(form.type, {'label': 'Type d\'entreprise *'}) }}
+  </div>
+   <div class="col-sm-6">
+{{ form_row(form.pays, {'label': 'Pays *'}) }}
+</div>
+ </div>
+
+
+
+<div class="collapse-group">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo" class="trigger collapsed">
+          Liens Divers
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+    <br>  
+<div id="client_edit_urls" data-prototype="{% filter escape %}{% include 'CVProfilBundle:Profil:form/liens.html.twig' with {'form': (form.urls.vars.prototype) | e} %}{% endfilter %}">
+      {% for child in form.urls %}
+   <div class="row">
+    <div class="col-sm-4">
+        {{ form_row(child.libelle, {'label': 'Libellé du lien '}) }}
+    </div>
+    <div class="col-sm-4">
+           {{ form_row(child.urlchamp, {'label': 'URL '}) }}
+    </div>
+</div>
+{% endfor %}
+</div>
+   <a href="#" id="add_category">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter un lien supplémentaire
+        </a>
+     </div>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" href="#collapseThree" aria-expanded="true" aria-controls="collapseThree" class="trigger collapsed">
+          Importer des fichiers
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+      <div class="panel-body">
+       <br>  
+<div id="client_edit_fichiers" data-prototype="{% filter escape %}{% include 'CVProfilBundle:Profil:form/fichiers.html.twig' with {'form': (form.fichiers.vars.prototype) | e} %}{% endfilter %}">
+      {% for child1 in form.fichiers %}
+<div class="row">
+    <div class="col-sm-4">
+        {{ form_row(child1.name, {'label': 'Nom du fichier'}) }}
+    </div>
+    <div class="col-sm-4">
+           {{ form_row(child1.file, {'label': 'Fichier'}) }}
+    </div>
+</div>
+{% endfor %}
+</div>
+   <a href="#" id="add_fichier">
+          <span class="glyphicon glyphicon-plus"></span> Ajouter un fichier supplémentaire
+        </a>
+    </div>
+    </div>
+  </div>
+</div>
+
+<br><br>
+*Champs obligatoires
+<br><br>
+{{ form_widget(form.modifier, {'attr': {'class': 'btn btn-success'}}) }}
+  {{ form_end(form) }}
+</div>
+<br><br>
+  <p>
+    <a href="{{ path('cv_profil_viewclient', {'id': Client.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour au client
+    </a>
+  </p>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+{# Voici le script en question : #}
+<script type="text/javascript">
+  $(document).ready(function() {
+    // On récupère la balise <div> en question qui contient l'attribut « data-prototype » qui nous intéresse.
+    var $container = $('div#client_edit_urls');
+    // On définit un compteur unique pour nommer les champs qu'on va ajouter dynamiquement
+    var index = $container.find(':input').length;
+    // On ajoute un nouveau champ à chaque clic sur le lien d'ajout.
+    $('#add_category').click(function(e) {
+      addCategory($container);
+      e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+      return false;
+    });
+      $container.children('div').each(function() {
+        addDeleteLink($(this));
+      });
+    
+    // La fonction qui ajoute un formulaire CategoryType
+    function addCategory($container) {
+      // Dans le contenu de l'attribut « data-prototype », on remplace :
+      // - le texte "__name__label__" qu'il contient par le label du champ
+      // - le texte "__name__" qu'il contient par le numéro du champ
+      var template = $container.attr('data-prototype')
+        .replace(/__name__label__/g, ' ')
+        .replace(/__name__/g, index)
+      ;
+      // On crée un objet jquery qui contient ce template
+      var $prototype = $(template);
+      // On ajoute au prototype un lien pour pouvoir supprimer la catégorie
+      addDeleteLink($prototype);
+      // On ajoute le prototype modifié à la fin de la balise <div>
+      $container.append($prototype);
+      // Enfin, on incrémente le compteur pour que le prochain ajout se fasse avec un autre numéro
+      index++;
+    }
+    // La fonction qui ajoute un lien de suppression d'une catégorie
+    function addDeleteLink($prototype) {
+      // Création du lien
+        var $deleteLink = $('<div style="margin-top: 33px;"> <a href="#"><span class="glyphicon glyphicon-remove" style="margin-left: 6px;font-size:17px;"></span></a></div><br><br>');
+      // Ajout du lien
+      $prototype.append($deleteLink);
+      // Ajout du listener sur le clic du lien pour effectivement supprimer la catégorie
+      $deleteLink.click(function(e) {
+        $prototype.remove();
+        e.preventDefault(); // évite qu'un # apparaisse dans l'URL
+        return false;
+      });
+    }
+  });
+</script>
+<script type="text/javascript">
+  $(document).ready(function() {
+   var $containere = $('div#client_edit_fichiers');
+     var indexe = $containere.find(':input').length;
+    $('#add_fichier').click(function(e) {
+      addFichier($containere);
+      e.preventDefault();
+      return false;
+    });
+      $containere.children('div').each(function() {
+        addDeleteFile($(this));
+      });
+    
+    function addFichier($containere) {
+      var template1 = $containere.attr('data-prototype')
+        .replace(/__name__label__/g, ' ')
+        .replace(/__name__/g, indexe)
+      ;
+       var $prototype1 = $(template1);
+     addDeleteFile($prototype1);
+      $containere.append($prototype1);
+      indexe++;
+    }
+    function addDeleteFile($prototype1) {
+        var $deleteLink1 = $('<div style="margin-top: 33px;"> <a href="#"><span class="glyphicon glyphicon-remove" style="margin-left: 6px;font-size:17px;"></span></a></div><br><br>');
+      $prototype1.append($deleteLink1);
+      $deleteLink1.click(function(e) {
+        $prototype1.remove();
+        e.preventDefault(); 
+        return false;
+      });
+    }
+  });
+
+
+</script>
+<style>
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  padding:10px;
+  color:#555;
+  font-size:16px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing:3px;
+  text-decoration:none;
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+</style>
+{% endblock %}

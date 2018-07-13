@@ -1,0 +1,25 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block title %}
+  Supprimer un Client 
+{% endblock %}
+{% block body %}
+  <h2>Supprimer une Entreprise</h2>
+
+  <p>
+    Etes-vous certain de vouloir supprimer le profil de "{{ Client.nom }}" ?
+  </p><br><br>
+
+  {# On met l'id de l'annonce dans la route de l'action du formulaire #}
+  <form action="{{ path('cv_profil_deleteclient', {'id': Client.id}) }}" method="post">
+    <a href="{{ path('cv_profil_viewclient', {'id': Client.id}) }}" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i>
+      Retour à l'entreprise
+    </a>
+    {# Ici j'ai écrit le bouton de soumission à la main #}
+    <input type="submit" value="Supprimer" class="btn btn-danger" />
+    {# Ceci va générer le champ CSRF #}
+    {{ form_rest(form) }}
+  </form>
+
+{% endblock %}

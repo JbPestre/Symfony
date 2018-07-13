@@ -1,0 +1,125 @@
+<?php
+
+namespace CV\ProfilBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pays
+ *
+ * @ORM\Table(name="pays")
+ * @ORM\Entity(repositoryClass="CV\ProfilBundle\Repository\PaysRepository")
+ */
+class Pays
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+
+   /**
+   * @ORM\OneToMany(targetEntity="CV\ProfilBundle\Entity\Client", cascade={"persist"}, mappedBy="pays")
+   */
+  private $client;
+  
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Pays
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+
+    /**
+     * Set client
+     *
+     * @param \CV\ProfilBundle\Entity\Client $client
+     *
+     * @return Pays
+     */
+    public function setClient(\CV\ProfilBundle\Entity\Client $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \CV\ProfilBundle\Entity\Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->client = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add client
+     *
+     * @param \CV\ProfilBundle\Entity\Client $client
+     *
+     * @return Pays
+     */
+    public function addClient(\CV\ProfilBundle\Entity\Client $client)
+    {
+        $this->client[] = $client;
+
+        return $this;
+    }
+
+    /**
+     * Remove client
+     *
+     * @param \CV\ProfilBundle\Entity\Client $client
+     */
+    public function removeClient(\CV\ProfilBundle\Entity\Client $client)
+    {
+        $this->client->removeElement($client);
+    }
+}

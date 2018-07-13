@@ -1,0 +1,30 @@
+<div class="experience">
+	
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.annee, {'label': 'Année de début *'}) }}
+    </div>
+    <div class="col-sm-6">
+           {{ form_row(form.nomSociete, {'label': 'Nom de la société *'}) }}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        {{ form_row(form.ville, {'label': 'Ville/Région'}) }}
+    </div>
+    <div class="col-sm-6">
+           {{ form_row(form.poste, {'label': 'Intitulé du poste *'}) }}
+    </div>
+</div>
+
+
+{{ form_row(form.descriptif, {'label': 'Descriptif de l\'expérience'}) }}
+
+<div class="row">	
+    <div class="col-sm-12 form-inline">
+{{ form_row(form.tags, {'label': 'Environnements Techniques (Tags)'}) }}
+          </div>
+</div>
+<br>
+</div>

@@ -1,0 +1,74 @@
+<?php
+
+namespace CV\ProfilBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Domaines
+ *
+ * @ORM\Table(name="domaines")
+ * @ORM\Entity(repositoryClass="CV\ProfilBundle\Repository\DomainesRepository")
+ */
+class Domaines
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nom", type="string", length=255)
+     */
+    private $nom;
+
+         /**
+   * @ORM\ManyToMany(targetEntity="CV\ProfilBundle\Entity\Profil", cascade={"persist"},mappedBy="Domaines")
+   */
+  private $profil;
+
+           /**
+   * @ORM\ManyToMany(targetEntity="CV\ProfilBundle\Entity\Interlocuteur", cascade={"persist"},mappedBy="Domaines")
+   */
+  private $interlocuteur;
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set nom
+     *
+     * @param string $nom
+     *
+     * @return Domaines
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * Get nom
+     *
+     * @return string
+     */
+    public function getNom()
+    {
+        return $this->nom;
+    }
+}

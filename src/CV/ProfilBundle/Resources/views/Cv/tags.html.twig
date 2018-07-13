@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <script>
+  $('ul li a').click(function(e) {
+        e.preventDefault();
+        $('ul li a').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>
+
+</head>
+<body>
+
+<div class="container">
+  <h2>Dynamic Tabs</h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
+    <li><a data-toggle="tab" href="#menu1">Menu 1</a></li>
+    <li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+    <li><a data-toggle="tab" href="#menu3">Menu 3</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+      <h3>HOME</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    </div>
+    <div id="menu1" class="tab-pane fade">
+      <h3>Menu 1</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <h3>Menu 2</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="menu3" class="tab-pane fade">
+      <h3>Menu 3</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="container">
+    <div>   
+
+<div class="container">
+    <div>
+        <ul id="menu_area" class="nav nav-pills nav-justified custom">
+            <li class="active">
+                <a href="{{ path('cv_homecv') }}" data-toggle="tab" id="menu_text">one</a>
+            </li>
+            <li><a href="#knowing_us2" data-toggle="tab" id="menu_text">two</a></li>
+            <li><a href="#knowing_us3" data-toggle="tab" id="menu_text">three</a></li>                                                    
+        </ul>
+       </div>
+</div>
+<ul class="nav nav-pills nav-justified">
+  <li><a  class="active" href="#">Gestion Profil</a></li>
+  <li><a href="#">Gestion Client</a></li>
+  <li><a href="{{ path('cv_homecv') }}">Historique Cv</a></li>
+  <li><a href="{{ path('cv_settings', {'id': app.user.id}) }}">Paramètres</a></li>
+  <li><a href="{{ path('logout') }}">Déconnexion</a></li>
+</ul>
+
+
+       </div>
+</div>
+<div class="input_fields_wrap">
+    <button class="add_field_button">Add More Fields</button>
+    <div><input type="text" name="mytext[]"></div>
+</div>
+<script type="text/javascript">
+  $(document).ready(function() {
+    var max_fields      = 10; //maximum input boxes allowed
+    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
+    var add_button      = $(".add_field_button"); //Add button ID
+    
+    var x = 1; //initlal text box count
+    $(add_button).click(function(e){ //on add input button click
+        e.preventDefault();
+        if(x < max_fields){ //max input box allowed
+            x++; //text box increment
+            $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+        }
+    });
+    
+    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+        e.preventDefault(); $(this).parent('div').remove(); x--;
+    })
+});
+  
+        function scollPos() {
+            var div = document.getElementById("myDiv").scrollTop;
+            document.getElementById("pos").innerHTML = div;
+        }
+    </script>
+    <form id="form1">
+    <div id="pos">
+    </div>
+    <div id="myDiv" style="overflow: auto; height: 200px; width: 200px;" onscroll="scollPos();">
+        Place some large content here
+    </div>
+    </form>
+</body>
+</html>

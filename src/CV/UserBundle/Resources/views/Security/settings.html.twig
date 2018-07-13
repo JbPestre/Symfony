@@ -1,0 +1,38 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block body %}
+
+<div class="col-sm-6">
+  <h3>Modifier mon mot de passe</h3>
+  <div class="well">
+
+
+{{ form_start(form) }}
+
+{{ form_row(form.password, {'label': 'Nouveau mot de passe'}) }}<br>
+{{ form_widget(form.Modifier, {'attr': {'class': 'btn btn-success'}}) }} 
+ {{ form_rest(form) }}
+  {{ form_end(form) }}
+</div>
+</div>
+
+<div class="col-sm-6">
+  <h3>Modifier mes informations</h3>
+  <div class="well">
+
+{{ form_start(form2) }}
+
+{{ form_row(form2.nom, {'label': 'Nom'}) }}
+{{ form_row(form2.prenom, {'label': 'Prénom'}) }}
+{{ form_row(form2.username, {'label': 'Email'}) }}<br>
+{{ form_widget(form2.modify, {'attr': {'class': 'btn btn-success'}}) }} 
+  {{ form_end(form2) }}
+</div>
+</div>
+{{ form_start(form2) }}
+
+
+ {{ form_rest(form2) }}
+  {{ form_end(form2) }}
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+{% endblock %}

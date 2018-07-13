@@ -1,0 +1,146 @@
+{% extends "CVProfilBundle::layout.html.twig" %}
+
+{% block body %}
+
+<table style="margin-bottom: 10px;">
+  <tr>
+    <td><h3>Gestion des utilisateurs</h3></td>
+
+ <td style="vertical-align: bottom;padding-bottom: 6.5px;padding-left: 30px;">
+       <a href="#" class="btn btn-success" style="margin-left:5px;">
+      Ajouter un utilisateur
+    </a>
+</td>
+  </tr>   
+</table>
+<hr>
+ <br>  
+<table class="table table-striped table-bordered table-hover">
+   <tr>
+      <td style="text-align: center;width: 30%;"><b>Référent Interne</b></td>
+      <td style="text-align: center;width: 30%;"><b>Email</b></td>
+      <td style="text-align: center;width: 30%;"><b>Rôle</b></td>
+      <td style="text-align: center;"><b>Modifier</b></td>
+      <td style="text-align: center;"><b>Supprimer</b></td>
+   </tr>
+  {% for RI in listRi %}
+
+   <tr>
+    <td><b>{{ RI.prenom }} {{ RI.nom }}</b></td>
+    <td>{{ RI.username }}</td>
+    <td style="text-align: center;">{% for role in RI.roles %}
+      {% if role == "ROLE_USER"  %}
+        Référent Interne
+      {% elseif role == "ROLE_ADMIN"  %}
+          SuperAdmin
+         {% endif %}{% endfor %}</td>
+             <td style="text-align: center;">
+      <form method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce référent interne ?');">
+    <button type="submit" name="supprid" value="{{ RI.nom }}" class="btn btn-secondary"><i class="glyphicon glyphicon-pencil"></i></button>
+  </form>
+</td>
+    <td style="text-align: center;">
+      <form method="post" onsubmit="return confirm('Voulez-vous vraiment supprimer ce référent interne ?');">
+    <button type="submit" name="supprid" value="{{ RI.nom }}" class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+  </form>
+</td>
+   </tr>
+ {% endfor %}
+ </table>
+ <br> <br>
+<b> Ajouter un nouveau référent interne (à bouger) :</b>
+<br> <br>
+{{ form_start(form6) }}
+<div class="row">
+    <div class="col-md-4">
+{{ form_row(form6.nom, {'label': 'Nom'}) }}
+  </div>
+  <div class="col-md-4">
+{{ form_row(form6.prenom, {'label': 'Prénom'}) }}
+</div></div>
+
+<div class="row">
+    <div class="col-md-4">
+{{ form_row(form6.username, {'label': 'Email'}) }}
+  </div>
+  <div class="col-md-4">
+{{ form_row(form6.password, {'label': 'Mot de passe'}) }}
+
+</div></div>
+
+{{ form_widget(form6.Addri, {'attr': {'class': 'btn btn-success'}}) }} 
+
+  {{ form_end(form6) }}
+  
+ 
+
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+<style>
+a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+}
+
+.inactiveLink {
+   pointer-events: none;
+   cursor: default;
+}
+.controls {
+  margin-bottom: 10px;
+}
+
+.collapse-group {
+
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-bottom: 20px;
+}
+
+.panel-title .trigger:before {
+float : right;
+  content: '\e113';
+  font-family: 'Glyphicons Halflings';
+  vertical-align: text-bottom;
+}
+
+.panel-title .trigger.collapsed:before {
+  content: '\e114';
+}
+
+.panel-title>a, .panel-title>a:active{
+  display:block;
+  padding:10px;
+  color:#555;
+  font-size:16px;
+  font-weight:bold;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  word-spacing:3px;
+  text-decoration:none;
+}
+
+.panel-body {
+    padding-top: 0px;
+    padding-bottom: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+div#profil_domaines.form-inline {
+   width: 400px;
+   margin-left: 40px;
+}
+
+#profil_domaines_2 {
+   margin-left: 20px;
+}
+
+#profil_domaines_6 {
+   margin-left: 2px;
+}
+
+.checkbox {
+    margin-right : 20px;
+}
+</style>
+{% endblock %}
