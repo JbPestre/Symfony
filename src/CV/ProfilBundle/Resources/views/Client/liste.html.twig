@@ -286,8 +286,8 @@ Du <b>{{ date_debut|date('d/m/Y') }}</b> au <b>{{ date_fin|date('d/m/Y') }}</b>
         <td>{{ Client.type.nom }}</td>
         <td>{{ Client.ri.prenom }}</td>
         <td style="text-align: center">{{ Client.dateCrea|date('d/m/Y') }}</td>
-        <td style="text-align: center">{% if Client.contacts|length == 0 %}-{% endif %}{% for Contact in Client.contacts %}{{ Client.contacts|length }}
-        {% endfor %}</td>
+        <td style="text-align: center">{% if Client.contacts|length == 0 %}- {% else %}{{ Client.contacts|length }}{% endif %}
+        </td>
     </tr>
 
     {% else %}

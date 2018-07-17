@@ -7,9 +7,19 @@
 
 
 {% block body %}
+<table style="margin-bottom: 10px;">
+  <tr>
+    <td><h2>Ajouter un interlocuteur</h2> </td>
 
-  <h2>Ajouter un interlocuteur</h2>
-  <br>
+ <td style="vertical-align: bottom;padding-bottom: 9.5px;padding-left: 30px;">
+
+    <a href="{{ path('cv_profil_viewclient', {'id': Client.id}) }}" style="background-color: #d5d3d3a6;margin-right:5px;" class="btn btn-default">
+      <i class="glyphicon glyphicon-chevron-left"></i> Revenir à <b>{{ Client.nom }}</b></i>
+    </a>
+</td>
+  </tr>   
+</table>
+<br>
 <div class="well">
 
 

@@ -79,6 +79,9 @@ ivory_ck_editor:
     configs:
         my_config:
             toolbar: [ [ "Bold", "Italic", "Underline", "Strike","-", "NumberedList","BulletedList", "-","Link", "-", "RemoveFormat" ], ... ]
-            height: "100px" 
+            height: "250px"
+        my_config1:
+            toolbar: [ [ "Bold", "Italic", "Underline", "Strike","-", "NumberedList","BulletedList", "-","Link", "-", "RemoveFormat" ], ... ]
+            height: "120px"  
            
 

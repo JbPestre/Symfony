@@ -283,6 +283,7 @@ public function addAction($id, Request $request)
 
     return $this->render('CVProfilBundle:Contact:add.html.twig', array(
       'form' => $form->createView(),
+      'Client' => $Client,
     ));
   }
 
@@ -313,6 +314,7 @@ public function addactionAction($id, Request $request)
 
     return $this->render('CVProfilBundle:Contact:addaction.html.twig', array(
       'form' => $form->createView(),
+      'Contact' => $Contact,
     ));
   }
 

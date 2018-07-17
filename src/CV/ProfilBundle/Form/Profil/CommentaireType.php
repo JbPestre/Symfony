@@ -23,7 +23,7 @@ class CommentaireType extends AbstractType
         $builder
       ->add('champ',     CKEditorType::class, array(
         'label' => false,
-        'config_name' => 'my_config'))
+        'config_name' => 'my_config1'))
       ->add('ajouter',      SubmitType::class,array('label' => 'Ajouter un nouveau commentaire'));
     }
     

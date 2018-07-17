@@ -271,14 +271,19 @@ public function viewAction($id, Request $request)
 
  $listActions = array();
 
-foreach ($listContact as $contact) {
- $listActions = $em
-      ->getRepository('CVProfilBundle:Actions')
-      ->findBy(
-      array('interlocuteur' => $contact),
-      array('dateAction' => 'ASC')                     
-    );
-}
+   $query10 = $em->createQueryBuilder();
+
+
+   $query10
+            ->select('p','j')
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide = 0 and i.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('p.dateAction','ASC');
+
+  $listActions = $query10->getQuery()->getResult();
 
 $valide = $request->request->get('valide');
 $nonvalide = $request->request->get('nonvalide');
@@ -332,16 +337,12 @@ $queryy = $em->createQueryBuilder();
 
      $queryy
             ->select('p')
-            ->from('CVProfilBundle:Actions', 'p');
-
-    $id20 = 0;
-
-            foreach ($listContact as $contact) {
-              $contact20 = $contact->getId();
-  $queryy
-            ->where('p.valide = 0 and p.interlocuteur = '.$contact20);
-            $id20++;
-          }
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide = 0 and i.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('p.dateAction','ASC');
 
   $listActions = $queryy->getQuery()->getResult();
 
@@ -357,16 +358,14 @@ $queryy = $em->createQueryBuilder();
 
   $queryy
             ->select('p')
-            ->from('CVProfilBundle:Actions', 'p');
-                $id30 = 0;
-            foreach ($listContact as $contact) {
-              $contact30 = $contact->getId();
-  $queryy           
-            ->where('p.valide = 0 and p.dateAction >= :now and p.interlocuteur = '.$contact30)
-            ->setParameter('now', new \DateTime('now'));
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide = 0 and p.dateAction >= :now and i.id = :id')
+            ->setParameter('id', $id)
+            ->setParameter('now', new \DateTime('now'))
+            ->orderBy('p.dateAction','ASC');
 
-            $id30++;
-}
 
   $listActions = $queryy->getQuery()->getResult();
 
@@ -381,15 +380,12 @@ $queryy = $em->createQueryBuilder();
 
   $queryy
             ->select('p')
-            ->from('CVProfilBundle:Actions', 'p');
-
-             $id40 = 0;
-            foreach ($listContact as $contact) {
-              $contact40 = $contact->getId();
-  $queryy
-            ->where('p.valide > 0 and p.interlocuteur = '.$contact40);
-               $id40++;
-          }
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide > 0 and i.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('p.dateAction','ASC');
 
 $listActions = $queryy->getQuery()->getResult();
 
@@ -408,50 +404,36 @@ if(empty($listContact))
   $countvalide = array(0);
 
 }else{
-  $query20
+ $query20
             ->select('count(p)')
-            ->from('CVProfilBundle:Actions', 'p');
-
-    $id20 = 0;
-
-            foreach ($listContact as $contact) {
-              $contact20 = $contact->getId();
-  $query20
-            ->where('p.valide = 0 and p.interlocuteur = '.$contact20);
-            $id20++;
-          }
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide = 0 and i.id = :id')
+            ->setParameter('id', $id);
 
   $query30
             ->select('count(p)')
-            ->from('CVProfilBundle:Actions', 'p');
-                $id30 = 0;
-            foreach ($listContact as $contact) {
-              $contact30 = $contact->getId();
-  $query30           
-            ->where('p.valide = 0 and p.dateAction >= :now and p.interlocuteur = '.$contact30)
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide = 0 and p.dateAction >= :now and i.id = :id')
+            ->setParameter('id', $id)
             ->setParameter('now', new \DateTime('now'));
-
-            $id30++;
-}
 
   $query40
             ->select('count(p)')
-            ->from('CVProfilBundle:Actions', 'p');
-
-             $id40 = 0;
-            foreach ($listContact as $contact) {
-              $contact40 = $contact->getId();
-  $query40
-            ->where('p.valide > 0 and p.interlocuteur = '.$contact40);
-               $id40++;
-          }
+            ->from('CVProfilBundle:Actions', 'p')
+            ->innerJoin('p.interlocuteur','j')
+            ->innerJoin('j.client','i')
+            ->where('p.valide > 0 and i.id = :id')
+            ->setParameter('id', $id);
 
 
   $countnonvalide = $query20->getQuery()->getOneOrNullResult();
   $countavenir = $query30->getQuery()->getOneOrNullResult();
   $countvalide = $query40->getQuery()->getOneOrNullResult();
 }
-
 
 
     return $this->render('CVProfilBundle:Client:view.html.twig', array(
